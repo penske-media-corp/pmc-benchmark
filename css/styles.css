@@ -1,0 +1,19 @@
+
+/**
+ * Styles for the PMC Benchmark panel in Debug Bar.
+ * This is part of the PMC Benchmark plugin
+ *
+ * @author Amit Gupta
+ * @since 2013-06-01
+ *
+ * @version 2013-06-02 Amit Gupta
+ */
+
+#pmc-benchmark-panel {
+	clear: both;
+	margin: 20px 10px 10px 20px;
+	color: #000000;
+	white-space: pre; text-align: left;
+}
+
+

@@ -1,35 +1,38 @@
 <?php
 /*
 Plugin Name: PMC Benchmark
-Plugin URI: https://github.com/Penske-Media-Corp/pmc-benchmark
-Description: This plugin helps determine which hooks are slow in execution. It is for debugging and performance optimization only & should only be run in a development environment.
-Version: 1.0 alpha
-Author: Amit Gupta, pmcdotcom
-Author URI: http://blog.igeek.info/
+Description: This plugin helps determine which hooks are slow in execution. It is for debugging and performance optimization only & should only be run in a development environment. This plugin needs <strong>Debug Bar</strong> plugin to be installed & activated, it adds a panel in it.
+Version: 1.0
+Author: Amit Gupta
+Author URI: http://igeek.info/
 License: GPL v2
 */
 
-/*
- * WordPress doesn't allow $_GET so a workaround to get the var from querystring
- */
-if( ( isset( $_SERVER['QUERY_STRING'] ) && stripos( $_SERVER['QUERY_STRING'], 'benchmark=yes' ) !== false ) || ( defined('PMC_BENCHMARK') && PMC_BENCHMARK === true ) ) {
-	pmc_benchmark_loader();	//lock & load
-}
 
-function pmc_benchmark_loader() {
-	require_once( __DIR__ . '/class-pmc-benchmark.php' );
+define( 'PMC_BENCHMARK_VERSION', '1.0' );
+
+/**
+ * Loader function for the hook profiler, this needs to be up & running ASAP!
+ */
+function pmc_benchmark_profile_hooks_loader() {
+	require_once( __DIR__ . '/class-pmc-profile-hooks.php' );
 
 	add_action( 'all', function(){
-		PMC_Benchmark::record_action( current_filter() );
+		PMC_Profile_Hooks::record_action( current_filter() );	//record all possible hooks
 	}, 1 );
-
-	add_action( 'admin_footer', 'pmc_benchmark_output', 9999 );
-	add_action( 'wp_footer', 'pmc_benchmark_output', 9999 );
 }
+pmc_benchmark_profile_hooks_loader();	//lock & load
 
-function pmc_benchmark_output() {
-	PMC_Benchmark::record_action( 'done' );
-	PMC_Benchmark::print_recorded_actions();
+/**
+ * Add the panel into Debug Bar
+ */
+function pmc_benchmark_add_panel( $panels ) {
+	require_once( __DIR__ . '/class-pmc-benchmark.php' );
+
+	$panels[] = new PMC_Benchmark();
+	return $panels;
 }
+add_filter( 'debug_bar_panels', 'pmc_benchmark_add_panel' );
+
 
 //EOF
