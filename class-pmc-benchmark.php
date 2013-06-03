@@ -59,7 +59,7 @@ class PMC_Benchmark extends Debug_Bar_Panel {
 	public function render() {
 ?>
 		<h2>PMC Benchmark</h2>
-		<div id="pmc-benchmark-panel"></div>
+		<div id="pmc-benchmark-panel">Hot damn!! Javascript got screwed somewhere!</div>
 <?php
 	}
 

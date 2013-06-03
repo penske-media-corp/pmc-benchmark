@@ -7,13 +7,45 @@
  * @since 2013-06-01
  *
  * @version 2013-06-02 Amit Gupta
+ * @version 2013-06-03 Amit Gupta
  */
 
 #pmc-benchmark-panel {
 	clear: both;
-	margin: 20px 10px 10px 20px;
+	margin: 20px 10px 10px 20px; white-space: pre-wrap; text-align: left;
 	color: #000000;
-	white-space: pre; text-align: left;
 }
 
+#pmc-benchmark-panel pre {
+	white-space: pre-wrap;
+}
+
+#pmc-benchmark-panel hr {
+	height: 2px; padding: 0; margin: 0;
+	background-color: #444444; color: #444444;
+}
+
+.pmc-benchmark-overview {
+	background: #333333; color: #FFCC33;
+	padding: 5px;
+	text-align: center; text-transform: uppercase;
+}
+
+.pmc-benchmark-list {
+	padding-bottom: 10px;
+}
+
+.pmc-benchmark-section-header {
+	background: #DDDDDD; color: #CC0033;
+	margin-bottom: 10px; padding: 5px;
+	text-align: center;
+}
+
+.pmc-benchmark-section-content {
+	padding-left: 10px;
+}
+
+.pmc-benchmark-section-content strong {
+	color: #7F2AFF; font-weight: bold;
+}
 
