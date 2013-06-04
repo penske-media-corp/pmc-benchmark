@@ -1,6 +1,6 @@
 === PMC Benchmark ===
-Contributors: pmcdotcom, amit
-Tags: hooks, debug, profiling, benchmark
+Contributors: amit, pmcdotcom
+Tags: hooks, debug, profiling, benchmark, debug bar, performance
 Requires at least: 3.5
 Tested up to: 3.5.1
 Stable tag: trunk
@@ -25,7 +25,17 @@ Just put it in the plugins directory like any other normal plugin & activate it,
 
 == Frequently Asked Questions ==
 
-None yet!
+= This plugin does not show hooks run in all the plugins. What's the deal? =
+
+It is a limitation at present. The plugin will profile only those hooks which are executed after this plugin is loaded. So some plugins will be missed out but all hooks executed in the current theme will be captured. You can get around this limitation by loading this plugin via mu-plugins which are loaded before plugins. This limitation will be resolved in a future release.
+
+= Why is there so much data on some pages? =
+
+Both the summary and detailed view are shown. This is after all a debugging plugin for use in development environment, to help you improve performance of your plugin(s)/theme(s). What good that be without verbose data! ;)
+
+== Screenshots ==
+
+1. PMC Benchmark panel in Debug Bar
 
 == Changelog ==
 
