@@ -2,7 +2,7 @@
 Contributors: amit, pmcdotcom
 Tags: hooks, debug, profiling, benchmark, debug bar, performance
 Requires at least: 3.5
-Tested up to: 3.5.1
+Tested up to: 3.6
 Stable tag: trunk
 License: GNU GPLv2
 

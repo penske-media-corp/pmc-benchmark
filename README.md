@@ -9,7 +9,7 @@ PMC Benchmark
 
 This plugin is for use in development environment only and not meant for use in a production environment.
 
-**Requirements**: This plugin requires PHP 5.3. It has been tested with WordPress 3.5.1 and might or might not work with an earlier version.
+**Requirements**: This plugin requires PHP 5.3. It has been tested with WordPress 3.5 and above, and might or might not work with an earlier version.
 
 On WordPress.org - http://wordpress.org/plugins/pmc-benchmark/
 
