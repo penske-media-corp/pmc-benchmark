@@ -73,10 +73,20 @@ class PMC_Profile_Hooks {
 			$arg = ( is_string( $arg ) ) ? stripslashes( $arg ) : $arg;
 		}
 
+		$detect = ( isset( $backtrace[2]['file'] ) && isset( $backtrace[2]['line'] ) ) ? ' in file: ' . $backtrace[2]['file'] . ' on line: ' . $backtrace[2]['line'] : '';
 		$GLOBALS['pmc_benchmark_action_timer'][ microtime() ][] = array(
 			'name' => $name,
-			'backtrace' => var_export( $backtrace[2], true ),
+			'backtrace' => ( static::isRecursive( $backtrace[2] ) ? '*** RECURSION ***' . $detect : var_export( $backtrace[2], true ) ),
 		);
+	}
+
+	public static function isRecursive( $var ) {
+		$dump = print_r( $var, true );
+		if ( strpos( $dump, '*RECURSION*' ) !== false ) {
+			return true;
+		}
+		else
+			return false;
 	}
 
 	public static function get_recorded_actions() {
