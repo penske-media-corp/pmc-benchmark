@@ -18,9 +18,13 @@ function pmc_benchmark_profile_hooks_loader() {
 	require_once( __DIR__ . '/class-ig-utility.php' );			//load up iG_Utility class
 	require_once( __DIR__ . '/class-pmc-profile-hooks.php' );	//load up hook profiler class
 
-	add_action( 'all', function(){
-		PMC_Profile_Hooks::record_action( current_filter() );	//record all possible hooks
-	}, 1 );
+	add_action(
+		'all',
+		function(){
+			PMC_Profile_Hooks::record_action( current_filter() );	//record all possible hooks
+		},
+		1
+	);
 }
 pmc_benchmark_profile_hooks_loader();	//lock & load
 

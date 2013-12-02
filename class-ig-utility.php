@@ -11,8 +11,8 @@
  * @version 2013-06-03 Amit Gupta
  */
 
-if( ! class_exists( 'iG_Utility' ) ) {
-	class iG_Utility {
+if ( ! class_exists( 'IG_Utility' ) ) {
+	class IG_Utility {
 
 		/**
 		 * This function returns a comma seperated sentence with the last element is joined by the connector
@@ -28,17 +28,17 @@ if( ! class_exists( 'iG_Utility' ) ) {
 		 * @version 2013-06-01 Amit Gupta
 		 */
 		public static function to_sentence( $items, $words_connector = ', ', $two_words_connector = ' and ', $last_word_connector = ' and ' ) {
-			if( empty( $items ) || ! is_array( $items ) ) {
+			if ( empty( $items ) || ! is_array( $items ) ) {
 				return $items;
 			}
 
-			$words_connector = ( empty( $words_connector ) ) ? ', ' : $words_connector;
+			$words_connector     = ( empty( $words_connector ) ) ? ', ' : $words_connector;
 			$two_words_connector = ( empty( $two_words_connector ) ) ? ' and ' : $two_words_connector;
 			$last_word_connector = ( empty( $last_word_connector ) ) ? ' and ' : $last_word_connector;
 
 			$last_item = array_pop( $items );
 
-			switch( count( $items ) ) {
+			switch ( count( $items ) ) {
 				case 0:
 					return $last_item;
 					break;
@@ -50,9 +50,7 @@ if( ! class_exists( 'iG_Utility' ) ) {
 					break;
 			}
 		}
-
-	//end of class
-	}
+	} //end of class
 }
 
 //EOF

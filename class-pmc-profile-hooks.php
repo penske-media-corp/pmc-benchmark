@@ -15,7 +15,7 @@ class PMC_Profile_Hooks {
 	protected static $_threshold_to_hide = 0.1;
 
 	protected static $_start_time = 0;
-	protected static $_end_time = 0;
+	protected static $_end_time   = 0;
 
 	public static function get_threshold_to_hide() {
 		return static::$_threshold_to_hide;
@@ -26,7 +26,7 @@ class PMC_Profile_Hooks {
 	}
 
 	public static function set_start_time() {
-		if( static::$_start_time !== 0 ) {
+		if ( static::$_start_time !== 0 ) {
 			return;
 		}
 
@@ -38,21 +38,21 @@ class PMC_Profile_Hooks {
 	}
 
 	public static function get_execution_duration() {
-		if( static::$_start_time == 0 ) {
+		if ( static::$_start_time == 0 ) {
 			return 0;
 		}
 
-		if( static::$_end_time == 0 ) {
+		if ( static::$_end_time == 0 ) {
 			static::$_end_time = microtime();
 		}
 
-		list( $start_usec, $start_sec ) = explode( " ", static::$_start_time );
-		$start_sec = floatval( $start_sec );
+		list( $start_usec, $start_sec ) = explode( ' ', static::$_start_time );
+		$start_sec  = floatval( $start_sec );
 		$start_usec = floatval( $start_usec );
 		$start_time = $start_sec + $start_usec;
 
-		list( $end_usec, $end_sec ) = explode( " ", static::$_end_time );
-		$end_sec = floatval( $end_sec );
+		list( $end_usec, $end_sec ) = explode( ' ', static::$_end_time );
+		$end_sec  = floatval( $end_sec );
 		$end_usec = floatval( $end_usec );
 		$end_time = $end_sec + $end_usec;
 
@@ -63,13 +63,13 @@ class PMC_Profile_Hooks {
 		static::set_start_time();
 		static::set_end_time();
 
-		$backtrace = debug_backtrace(false);
+		$backtrace = debug_backtrace( false );
 
-		if( ! isset( $backtrace[2]['args'] ) ) {
+		if ( ! isset( $backtrace[2]['args'] ) ) {
 			return;
 		}
 
-		foreach( $backtrace[2]['args'] as &$arg ) {
+		foreach ( $backtrace[2]['args'] as &$arg ) {
 			$arg = ( is_string( $arg ) ) ? stripslashes( $arg ) : $arg;
 		}
 
@@ -80,24 +80,23 @@ class PMC_Profile_Hooks {
 		);
 	}
 
-	public static function isRecursive( $var ) {
+	public static function is_recursive( $var ) {
 		$dump = print_r( $var, true );
 		if ( strpos( $dump, '*RECURSION*' ) !== false ) {
 			return true;
-		}
-		else
+		} else
 			return false;
 	}
 
 	public static function get_recorded_actions() {
 		$output = '<pre>' . "\n";
 
-		$timetotals = array();
-		$eol = '<br />';
-		$detail_list = '<div class="pmc-benchmark-list"><p class="pmc-benchmark-section-header">';
+		$timetotals   = array();
+		$eol          = '<br />';
+		$detail_list  = '<div class="pmc-benchmark-list"><p class="pmc-benchmark-section-header">';
 		$detail_list .= '<strong>DETAILED ACTION LIST</strong>';
 
-		if( static::get_threshold_to_hide() > 0.0 ) {
+		if ( static::get_threshold_to_hide() > 0.0 ) {
 			$detail_list .= $eol . 'Hiding items faster than <strong>' . static::get_threshold_to_hide() . '</strong> seconds.';
 		}
 
@@ -115,38 +114,38 @@ class PMC_Profile_Hooks {
 				$items = array();
 			}
 
-			list( $usec, $sec ) = explode( " ", $timestamp );
-			$sec = floatval( $sec );
-			$usec = floatval( $usec );
-			$timestamp_float = $sec + $usec;
+			list( $usec, $sec ) = explode( ' ', $timestamp );
+			$sec                = floatval( $sec );
+			$usec               = floatval( $usec );
+			$timestamp_float    = $sec + $usec;
 
-			if( $timestamp && ! isset( $start_time ) ) {
+			if ( $timestamp && ! isset( $start_time ) ) {
 				$start_time = $timestamp_float;
 			} else {
 				$end_time = $timestamp_float;
 			}
 
-			if( empty( $previous_items['items'] ) ) {
-				$diff = 0.0;
+			if ( empty( $previous_items['items'] ) ) {
+				$diff                      = 0.0;
 				$previous_items['items'][] = array( 'name' => 'nothing', 'backtrace' => '' );
 			} else {
 				$diff = $timestamp_float - ( $previous_items['timestamp']['sec'] + $previous_items['timestamp']['usec'] );
 			}
 
-			if( $diff > static::get_threshold_to_hide() ) {
+			if ( $diff > static::get_threshold_to_hide() ) {
 				$previous = array();
 
-				if( ! empty( $previous_items['items'] ) ) {
-					foreach( $previous_items['items'] as $previous_item ) {
+				if ( ! empty( $previous_items['items'] ) ) {
+					foreach ( $previous_items['items'] as $previous_item ) {
 						$previous[] = $previous_item['name'];
 					}
 				}
 
-				foreach( $items as $item ) {
-					$detail_list .= $eol . '<strong>' . round( $diff, 3 ) . '</strong> seconds between starting <strong>' . iG_Utility::to_sentence( $previous, ', ', '</strong> and <strong>', '</strong> and <strong>' ) . '</strong> and starting <strong>' . $item['name'] . '</strong>' . $eol;
+				foreach ( $items as $item ) {
+					$detail_list .= $eol . '<strong>' . round( $diff, 3 ) . '</strong> seconds between starting <strong>' . IG_Utility::to_sentence( $previous, ', ', '</strong> and <strong>', '</strong> and <strong>' ) . '</strong> and starting <strong>' . $item['name'] . '</strong>' . $eol;
 
-					if( ! empty( $previous_items['items'] ) ) {
-						foreach( $previous_items['items'] as $previous_item ) {
+					if ( ! empty( $previous_items['items'] ) ) {
+						foreach ( $previous_items['items'] as $previous_item ) {
 							$detail_list .= $previous_item['backtrace'] . $eol;
 						}
 					}
@@ -155,21 +154,21 @@ class PMC_Profile_Hooks {
 				}
 			}
 
-			foreach( $items as $key => $item ) {
+			foreach ( $items as $key => $item ) {
 				$timetotals[ $item['name'] ][] = $diff;
 			}
 
-			$previous_items['timestamp']['sec'] = $sec;
+			$previous_items['timestamp']['sec']  = $sec;
 			$previous_items['timestamp']['usec'] = $usec;
-			$previous_items['items'] = $items;
-		} while( list( $timestamp, $items ) = each( $GLOBALS['pmc_benchmark_action_timer'] ) );
+			$previous_items['items']             = $items;
+		} while ( list( $timestamp, $items ) = each( $GLOBALS['pmc_benchmark_action_timer'] ) );
 
 		$detail_list .= '</p></div>';
 
-		$summary_list = '<div class="pmc-benchmark-list"><p class="pmc-benchmark-section-header">';
+		$summary_list  = '<div class="pmc-benchmark-list"><p class="pmc-benchmark-section-header">';
 		$summary_list .= '<strong>ACTION OVERVIEW:</strong> Aggregate Totals.';
 
-		if( static::get_threshold_to_hide() > 0.0 ) {
+		if ( static::get_threshold_to_hide() > 0.0 ) {
 			$summary_list .= $eol . 'Hiding items faster than <strong>' . static::get_threshold_to_hide() . '</strong> seconds.';
 		}
 
@@ -178,20 +177,20 @@ class PMC_Profile_Hooks {
 		do {
 			$total_time = 0.0;
 
-			if( isset( $times ) ) {
-				foreach( $times as $time ) {
+			if ( isset( $times ) ) {
+				foreach ( $times as $time ) {
 					$total_time += $time;
 				}
 			}
 
-			if( $total_time > static::get_threshold_to_hide() ) {
+			if ( $total_time > static::get_threshold_to_hide() ) {
 				$summary_list .= '<strong>' . $tag . '</strong> took approximately <strong>' . round( $total_time, 3 ) . '</strong> seconds' . $eol;
 			}
 		} while ( list( $tag, $times ) = each( $timetotals ) );
 
 		$summary_list .= '</p></div>';
 
-		if( $end_time < $start_time ) {
+		if ( $end_time < $start_time ) {
 			$end_time = $start_time;
 		}
 
@@ -204,9 +203,7 @@ class PMC_Profile_Hooks {
 
 		return $output;
 	}
-
-//end of class
-}
+} //end of class
 
 PMC_Profile_Hooks::record_action( 'PMC_Benchmark__loaded' );
 
