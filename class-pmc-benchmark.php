@@ -36,10 +36,10 @@ class PMC_Benchmark extends Debug_Bar_Panel {
 	 * @return  void
 	 */
 	public function enqueue() {
-		wp_enqueue_style( self::plugin_id . '-css', plugins_url( "css/styles.css", __FILE__ ), array(), PMC_BENCHMARK_VERSION );
+		wp_enqueue_style( self::plugin_id . '-css', plugins_url( 'css/styles.css', __FILE__ ), array(), PMC_BENCHMARK_VERSION );
 
 		wp_enqueue_script( 'jquery' );
-		wp_enqueue_script( self::plugin_id . '-encoder', plugins_url( "js/encoder.js", __FILE__ ), array(), PMC_BENCHMARK_VERSION );
+		wp_enqueue_script( self::plugin_id . '-encoder', plugins_url( 'js/encoder.js', __FILE__ ), array(), PMC_BENCHMARK_VERSION );
 	}
 
 	/**
@@ -78,9 +78,7 @@ class PMC_Benchmark extends Debug_Bar_Panel {
 		</script>
 <?php
 	}
-
-//end of class
-}
+} //end of class
 
 
 //EOF
